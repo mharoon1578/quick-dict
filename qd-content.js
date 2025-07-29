@@ -16,15 +16,27 @@ const saveSvg = `
 </svg>`;
 
 /* ---------- Ctrl key listener ---------- */
+let ctrlDown = false;   // track state
+
 document.addEventListener('keydown', async (e) => {
-  if (e.key !== 'Control') return;
+  if (e.key !== 'Control' || e.repeat || e.altKey || e.shiftKey || e.metaKey) return;
+  if (ctrlDown) return;           // already pressed
+  ctrlDown = true;
+
   const word = window.getSelection().toString().trim();
   if (!word) return;
-  if (popup && lastSel === word) { closePopup(); return; }
+
+  if (popup && lastSel === word) {
+    closePopup();
+    return;
+  }
   lastSel = word;
   await showPopup(word);
 });
 
+document.addEventListener('keyup', (e) => {
+  if (e.key === 'Control') ctrlDown = false;
+});
 /* ---------- Popup builder ---------- */
 async function showPopup(word) {
   closePopup();
