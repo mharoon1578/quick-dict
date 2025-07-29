@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Quick Dictionary",
+  "description": "Dark pop-up dictionary with word saving.",
+  "version": "1.1",
+  "permissions": ["activeTab", "storage"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["qd-content.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
